@@ -77,10 +77,10 @@
                 <!-- Sidebar -->
                 <Border Grid.Column="0" Background="#3E3E3E">
                     <StackPanel>
-                        <Button x:Name="ToggleMenuButton" Content="☰" FontSize="24" Click="ToggleMenuButton_Click" />
+                        <Button x:Name="ToggleMenuButton" Content="☰" FontSize="24" Click="ToggleMenuButton_Click" Background="#404040"/>
 
                         <StackPanel x:Name="MenuItemsPanel" Visibility="Collapsed" Margin="0,20,0,0">
-                            <Button Content="CHANGE USER NAME" Margin="5" />
+                            <Button x:Name="ChangeUsernameButton" Content="CHANGE USER NAME" Margin="5" Click="ChangeUsernameButton_Click" />
                             <Button Content="CONNECT" Margin="5" />
                             <Button Content="DISCONNECT" Margin="5" />
                         </StackPanel>
@@ -102,13 +102,13 @@
                         </StackPanel>
                     </ScrollViewer>
 
-                    <Border Grid.Row="1" Background="LightGreen" CornerRadius="15" Padding="10">
+                    <Border Grid.Row="1" Background="#404040" CornerRadius="15" Padding="10">
                         <TextBox x:Name="MessageInput"
                                  Text="Your message"
                                  FontFamily="Comic Sans MS"
                                  Foreground="White"
                                  FontSize="21"
-                                 Background="LightGreen"
+                                 Background="#404040"
                                  BorderThickness="0"
                                  TextWrapping="Wrap"
                                  KeyDown="MessageInput_KeyDown"

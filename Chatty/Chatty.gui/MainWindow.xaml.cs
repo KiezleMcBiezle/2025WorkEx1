@@ -9,8 +9,7 @@ namespace ChatappUI
     public partial class MainWindow : Window
     {
         private bool isSidebarOpen = false;
-
-        public string? CurrentUsername { get; set; } // Nullable-safe
+        public string CurrentUsername { get; set; }
 
         public MainWindow()
         {
@@ -20,13 +19,13 @@ namespace ChatappUI
             var usernameWindow = new UsernameWindow();
             bool? result = usernameWindow.ShowDialog();
 
-            if (result == true && !string.IsNullOrWhiteSpace(usernameWindow.Username))
+            if (result == true)
             {
                 CurrentUsername = usernameWindow.Username;
             }
             else
             {
-                Close(); // Exit if username is not provided
+                Close(); // Exit if user doesn't enter a name
             }
         }
 
@@ -126,19 +125,20 @@ namespace ChatappUI
             isSidebarOpen = !isSidebarOpen;
         }
 
-        private void Minimize_Click(object sender, RoutedEventArgs e)
+        private void ChangeUsernameButton_Click(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
-        }
+            var usernameWindow = new UsernameWindow();
 
-        private void Maximize_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = (this.WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
-        }
+            // Prefill the current username if UsernameWindow supports it
+            usernameWindow.Username = CurrentUsername;
 
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
+            bool? result = usernameWindow.ShowDialog();
+
+            if (result == true && !string.IsNullOrWhiteSpace(usernameWindow.Username))
+            {
+                CurrentUsername = usernameWindow.Username;
+                MessageBox.Show($"Username changed to: {CurrentUsername}", "Username Changed", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
@@ -147,5 +147,22 @@ namespace ChatappUI
                 this.DragMove();
         }
 
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Maximize_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+                WindowState = WindowState.Normal;
+            else
+                WindowState = WindowState.Maximized;
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

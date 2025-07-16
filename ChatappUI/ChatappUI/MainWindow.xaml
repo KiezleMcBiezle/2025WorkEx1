@@ -14,7 +14,7 @@
                 <Button x:Name="ToggleMenuButton" Content="☰" FontSize="24" Click="ToggleMenuButton_Click" />
 
                 <StackPanel x:Name="MenuItemsPanel" Visibility="Collapsed" Margin="0,20,0,0">
-                    <Button Content="CHANGE USER NAME" Margin="5" />
+                    <Button Content="CHANGE USERNAME" Margin="5" />
                     <Button Content="CONNECT" Margin="5" />
                     <Button Content="DISCONNECT" Margin="5" />
                 </StackPanel>

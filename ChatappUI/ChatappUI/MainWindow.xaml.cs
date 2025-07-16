@@ -1,25 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace ChatappUI
 {
     public partial class MainWindow : Window
     {
-        private bool isSidebarOpen = false;
-
         public MainWindow()
         {
             InitializeComponent();
         }
-
         private void MessageInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                e.Handled = true; // Prevent Enter key from making a newline or beeping
+                e.Handled = true; // Prevent beep sound on enter
 
                 string message = MessageInput.Text.Trim();
 
@@ -39,7 +45,7 @@ namespace ChatappUI
                     // Create timestamp TextBlock
                     var timestampText = new TextBlock
                     {
-                        Text = DateTime.Now.ToString("HH:mm"),
+                        Text = System.DateTime.Now.ToString("HH:mm"),  // e.g., 14:23
                         FontFamily = new FontFamily("Comic Sans MS"),
                         FontSize = 12,
                         Foreground = Brushes.WhiteSmoke,
@@ -47,16 +53,17 @@ namespace ChatappUI
                         Margin = new Thickness(0, 4, 0, 0)
                     };
 
-                    // StackPanel to hold message and timestamp
+                    // StackPanel to hold message and timestamp vertically
                     var stack = new StackPanel
                     {
                         Orientation = Orientation.Vertical,
                         Width = 250
                     };
+
                     stack.Children.Add(messageText);
                     stack.Children.Add(timestampText);
 
-                    // Bubble border
+                    // Border around the whole message+time
                     var border = new Border
                     {
                         Background = Brushes.LightGreen,
@@ -67,35 +74,33 @@ namespace ChatappUI
                         Child = stack
                     };
 
-                    // Add to message container
                     MessageContainer.Children.Add(border);
 
                     MessageInput.Clear();
 
-                    // Scroll to bottom
+                    // Scroll to bottom after adding message
                     MessageContainer.UpdateLayout();
-                    if (MessageContainer.Parent is ScrollViewer scrollViewer)
-                    {
-                        scrollViewer.ScrollToBottom();
-                    }
+                    var scrollViewer = (ScrollViewer)MessageContainer.Parent;
+                    scrollViewer.ScrollToBottom();
                 }
             }
         }
+        private bool isSidebarOpen = false;
 
         private void ToggleMenuButton_Click(object sender, RoutedEventArgs e)
         {
             if (isSidebarOpen)
             {
-                SidebarColumn.Width = new GridLength(50);
+                SidebarColumn.Width = new GridLength(50); // narrow sidebar
                 MenuItemsPanel.Visibility = Visibility.Collapsed;
             }
             else
             {
-                SidebarColumn.Width = new GridLength(200);
+                SidebarColumn.Width = new GridLength(200); // expanded sidebar
                 MenuItemsPanel.Visibility = Visibility.Visible;
             }
-
             isSidebarOpen = !isSidebarOpen;
         }
+
     }
 }

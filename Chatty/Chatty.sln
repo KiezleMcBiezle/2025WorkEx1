@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatty.gui", "Chatty.gui\Chatty.gui.csproj", "{D54F2D6C-A90F-412B-AF0F-EC783D2C0E6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chatty.gui", "Chatty.gui\Chatty.gui.csproj", "{D54F2D6C-A90F-412B-AF0F-EC783D2C0E6E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "servernew", "..\..\servernew\servernew\servernew.csproj", "{1CC75B5B-F1A6-44FE-873D-BE35F614B091}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "core2", "..\..\servernew\core2\core2.csproj", "{869F061E-E2ED-4185-A181-9EFB965ECD7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{D54F2D6C-A90F-412B-AF0F-EC783D2C0E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D54F2D6C-A90F-412B-AF0F-EC783D2C0E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D54F2D6C-A90F-412B-AF0F-EC783D2C0E6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CC75B5B-F1A6-44FE-873D-BE35F614B091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CC75B5B-F1A6-44FE-873D-BE35F614B091}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CC75B5B-F1A6-44FE-873D-BE35F614B091}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CC75B5B-F1A6-44FE-873D-BE35F614B091}.Release|Any CPU.Build.0 = Release|Any CPU
+		{869F061E-E2ED-4185-A181-9EFB965ECD7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{869F061E-E2ED-4185-A181-9EFB965ECD7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{869F061E-E2ED-4185-A181-9EFB965ECD7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{869F061E-E2ED-4185-A181-9EFB965ECD7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@ using System.Reflection.Emit;
 using System.Text;
 
 var client =  new TcpClient();
-client.Connect(IPAddress.Parse("127.0.0.1"),9001);
+client.Connect(IPAddress.Parse("192.168.55.3"),9001);
 
 Console.WriteLine("what is your username");
 var username = Console.ReadLine();
@@ -17,7 +17,6 @@ usernamepacket.Add((byte)len);
 usernamepacket.Add((byte)1);
 usernamepacket.AddRange(Encoding.ASCII.GetBytes(username));
 client.GetStream().Write(usernamepacket.ToArray(), 0, usernamepacket.Count);
-Console.ReadLine();
 
 Console.WriteLine("can you enter a message please");
 while (1 > 0)
@@ -31,7 +30,6 @@ while (1 > 0)
     packet.Add((byte)1);   
     packet.AddRange(Encoding.ASCII.GetBytes(input));
     client.GetStream().Write(packet.ToArray(), 0, packet.Count);
-    Console.ReadLine();
     var opcode1 = client.GetStream().ReadByte();
     if ((byte)opcode.message == opcode1)
         {
@@ -40,7 +38,6 @@ while (1 > 0)
          _ = client.GetStream().Read(data, 0, lengthofrecieved);
          var complete_message = Encoding.ASCII.GetString(data);
         Console.WriteLine(complete_message);
-        Console.ReadLine() ;
         }
    
 }

@@ -83,10 +83,10 @@ namespace ChatappUI
                     stack.Children.Add(messageText);
                     stack.Children.Add(timestampText);
 
-                    // Final message border
+                    // Final message border with updated background
                     var border = new Border
                     {
-                        Background = Brushes.LightGreen,
+                        Background = (Brush)new BrushConverter().ConvertFromString("#404040"),
                         CornerRadius = new CornerRadius(15),
                         Margin = new Thickness(100, 10, 0, 10),
                         Padding = new Thickness(10),

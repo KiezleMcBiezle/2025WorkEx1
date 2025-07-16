@@ -4,14 +4,17 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Collections.Concurrent;
+using servernew;
+using System.Runtime.InteropServices;
 
-TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 9001);
+TcpListener listener = new TcpListener(IPAddress.Parse("192.168.55.3"), 9001);
 listener.Start();
 Console.WriteLine("success");
-Console.ReadLine();
 List<TcpClient> clientlist = new List<TcpClient>();
-
 Dictionary < TcpClient,string> usernamelist = new Dictionary<TcpClient,string>();
+ConcurrentQueue<message_packet> queue = new ConcurrentQueue<message_packet>();
+
+
 Task.Run(() =>
 {
     var client = listener.AcceptTcpClient();
@@ -26,9 +29,9 @@ Task.Run(() =>
         var complete_username = Encoding.ASCII.GetString(datas);
         usernamelist[client] = complete_username;
     }
-    _ = Task.Run(() => Handle_client(client, usernamelist));
+    _ = Task.Run(() => Handle_client(client, usernamelist, queue));
 
-    static async Task Handle_client(TcpClient client,Dictionary<TcpClient, string> usernamelist)
+    static async Task Handle_client(TcpClient client, Dictionary<TcpClient, string> usernamelist, ConcurrentQueue<message_packet> queue)
     {
         while (true)
         {
@@ -39,31 +42,34 @@ Task.Run(() =>
                 byte[] data = new byte[length];
                 _ = client.GetStream().Read(data, 0, length);
                 var complete_message = Encoding.ASCII.GetString(data);
-                List <string> messageforqueue = new List<string>();
-                messageforqueue.Add (opcode.message);
+                message_packet queuemessage = new message_packet(complete_message, opcode1, client);
+                queue.Enqueue(queuemessage);
             }
-       
+        }
     }
 });
-
-
-
-        List<byte> packet = new List<byte>();
-        packet.Add((byte)opcode.message);
-        var message = Encoding.ASCII.GetBytes(message_tosend);
-        byte message_tosend_length = (byte)message.Length;
-        packet.Add((byte)message_tosend_length);
-        packet.AddRange(Encoding.ASCII.GetBytes(message_tosend));
-        client.GetStream().Write(packet.ToArray(), 0, packet.Count);
-        Console.ReadLine();
-    }
-
-     else if ((byte)opcode.disconnect == opcode1)
+while (true)
+{
+    if (queue.TryDequeue(out message_packet result))
     {
-        var userid = client.GetStream().ReadByte();
-        Console.WriteLine(usernamelist[client] + "disconnected");
+        if (result.Opcode ==  (int)opcode.message)
+        {
+            List<byte> packet = new List<byte>();
+            packet.Add((byte)opcode.message);
+            var message = Encoding.ASCII.GetBytes(result.Message);
+            byte message_tosend_length = (byte)result.Message.Length;
+            packet.Add((byte)message_tosend_length);
+            packet.AddRange(Encoding.ASCII.GetBytes(result.Message));
+            foreach (TcpClient client in clientlist)
+            {
+                client.GetStream().Write(packet.ToArray(), 0, packet.Count);
+            }
+        }
     }
 }
 
 
+
+
+       
 

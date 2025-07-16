@@ -1,0 +1,13 @@
+﻿<Window x:Class="ChatappUI.UsernameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Enter Username" Height="200" Width="400" WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Welcome To Chatty!" FontSize="16" Margin="0,0,0,10" Foreground="Orange"  />
+            <TextBlock Text="Enter your username:" FontSize="16" Margin="0,0,0,10" Foreground="Orange"/>
+            <TextBox x:Name="UsernameInput" Width="250" FontSize="16" Margin="0,0,0,10" />
+            <Button Content="Start Chatting" Width="150" Click="StartChat_Click" Background="LightGreen" />
+        </StackPanel>
+    </Grid>
+</Window>

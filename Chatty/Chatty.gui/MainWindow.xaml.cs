@@ -10,22 +10,48 @@ namespace ChatappUI
     {
         private bool isSidebarOpen = false;
 
+        public string? CurrentUsername { get; set; } // Nullable-safe
+
         public MainWindow()
         {
             InitializeComponent();
+
+            // Show username entry window
+            var usernameWindow = new UsernameWindow();
+            bool? result = usernameWindow.ShowDialog();
+
+            if (result == true && !string.IsNullOrWhiteSpace(usernameWindow.Username))
+            {
+                CurrentUsername = usernameWindow.Username;
+            }
+            else
+            {
+                Close(); // Exit if username is not provided
+            }
         }
 
         private void MessageInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                e.Handled = true; // Prevent Enter key from making a newline or beeping
+                e.Handled = true;
 
                 string message = MessageInput.Text.Trim();
 
                 if (!string.IsNullOrEmpty(message))
                 {
-                    // Create message TextBlock
+                    // Username TextBlock
+                    var usernameText = new TextBlock
+                    {
+                        Text = CurrentUsername ?? "You",
+                        FontWeight = FontWeights.Bold,
+                        FontFamily = new FontFamily("Comic Sans MS"),
+                        FontSize = 14,
+                        Foreground = Brushes.DarkGreen,
+                        Margin = new Thickness(0, 0, 0, 4)
+                    };
+
+                    // Message TextBlock
                     var messageText = new TextBlock
                     {
                         Text = message,
@@ -36,7 +62,7 @@ namespace ChatappUI
                         Width = 250
                     };
 
-                    // Create timestamp TextBlock
+                    // Timestamp TextBlock
                     var timestampText = new TextBlock
                     {
                         Text = DateTime.Now.ToString("HH:mm"),
@@ -47,16 +73,18 @@ namespace ChatappUI
                         Margin = new Thickness(0, 4, 0, 0)
                     };
 
-                    // StackPanel to hold message and timestamp
+                    // Stack for all content
                     var stack = new StackPanel
                     {
                         Orientation = Orientation.Vertical,
                         Width = 250
                     };
+
+                    stack.Children.Add(usernameText);
                     stack.Children.Add(messageText);
                     stack.Children.Add(timestampText);
 
-                    // Bubble border
+                    // Final message border
                     var border = new Border
                     {
                         Background = Brushes.LightGreen,
@@ -67,7 +95,7 @@ namespace ChatappUI
                         Child = stack
                     };
 
-                    // Add to message container
+                    // Add message to container
                     MessageContainer.Children.Add(border);
 
                     MessageInput.Clear();

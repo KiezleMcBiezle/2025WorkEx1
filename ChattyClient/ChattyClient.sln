@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36301.6
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChattyClient", "ChattyClient\ChattyClient.csproj", "{17411CC1-BC86-434B-B6A5-BE56EC5252B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chattyservernew", "chattyservernew\chattyservernew.csproj", "{434C686B-BD55-42DB-91CD-1D06A21A8EFE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17411CC1-BC86-434B-B6A5-BE56EC5252B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17411CC1-BC86-434B-B6A5-BE56EC5252B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17411CC1-BC86-434B-B6A5-BE56EC5252B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17411CC1-BC86-434B-B6A5-BE56EC5252B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{434C686B-BD55-42DB-91CD-1D06A21A8EFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{434C686B-BD55-42DB-91CD-1D06A21A8EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{434C686B-BD55-42DB-91CD-1D06A21A8EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{434C686B-BD55-42DB-91CD-1D06A21A8EFE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {43CBE992-C761-4F2C-8270-F33B4E6FB18F}
+	EndGlobalSection
+EndGlobal

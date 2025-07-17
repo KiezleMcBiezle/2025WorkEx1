@@ -14,7 +14,6 @@ usernamepacket.Add((byte)opcode.username);
 var user = Encoding.ASCII.GetBytes(username);
 byte len = (byte)user.Length;
 usernamepacket.Add((byte)len);
-usernamepacket.Add((byte)1);
 usernamepacket.AddRange(Encoding.ASCII.GetBytes(username));
 client.GetStream().Write(usernamepacket.ToArray(), 0, usernamepacket.Count);
 
@@ -26,8 +25,7 @@ while (1 > 0)
     packet.Add((byte)opcode.message);
     var message = Encoding.ASCII.GetBytes(input);
     byte length = (byte)message.Length;
-    packet.Add((byte)length);
-    packet.Add((byte)1);   
+    packet.Add((byte)length);   
     packet.AddRange(Encoding.ASCII.GetBytes(input));
     client.GetStream().Write(packet.ToArray(), 0, packet.Count);
     var opcode1 = client.GetStream().ReadByte();

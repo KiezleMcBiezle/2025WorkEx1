@@ -11,6 +11,42 @@
         <vm:MainViewModel />
     </Window.DataContext>
 
+    <Window.Resources>
+        <!-- Custom button style that maintains colors when disabled -->
+        <Style x:Key="ColoredButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3">
+                            <ContentPresenter x:Name="contentPresenter"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            Focusable="False"
+                                            RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Opacity" Value="0.6"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- Sidebar column -->
@@ -55,7 +91,8 @@
                         Background="LimeGreen"
                         Foreground="White"
                         FontWeight="Bold"
-                        Margin="0,0,0,10"/>
+                        Margin="0,0,0,10"
+                        Style="{StaticResource ColoredButtonStyle}"/>
 
                 <!-- Spacer -->
                 <Border Grid.Row="4"/>
@@ -67,7 +104,8 @@
                         Height="35"
                         Background="Red"
                         Foreground="White"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold"
+                        Style="{StaticResource ColoredButtonStyle}"/>
             </Grid>
         </Border>
 
@@ -115,10 +153,12 @@
                     <!-- Messages list -->
                     <ScrollViewer Grid.Row="1" 
                                   VerticalScrollBarVisibility="Auto"
-                                  Background="White">
+                                  Background="White"
+                                  x:Name="MessagesScrollViewer">
                         <ListBox ItemsSource="{Binding Messages}" 
                                  BorderThickness="0"
-                                 Background="Transparent">
+                                 Background="Transparent"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding}" 
@@ -146,7 +186,8 @@
                              Height="40"
                              VerticalContentAlignment="Center"
                              FontSize="14"
-                             Padding="10,0"/>
+                             Padding="10,0"
+                             KeyDown="TextBox_KeyDown"/>
 
                     <!-- Placeholder text -->
                     <TextBlock Text="Enter message here..." 
@@ -181,7 +222,8 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Background="DodgerBlue"
-                        Foreground="White"/>
+                        Foreground="White"
+                        Style="{StaticResource ColoredButtonStyle}"/>
             </Grid>
         </Grid>
     </Grid>

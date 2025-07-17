@@ -9,14 +9,12 @@ namespace ChattyServer
 {
     class Program
     {
-        static List<Client> _users;
-        static TcpListener _listener;
+        static List<Client> _users = new List<Client>();
+        static TcpListener? _listener;
         static readonly object _lockObject = new object();
 
         static void Main(string[] args)
         {
-            _users = new List<Client>();
-
             // Use port 9001 to match your client
             _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 9001);
             _listener.Start();
@@ -56,6 +54,8 @@ namespace ChattyServer
             lock (_lockObject)
             {
                 // Send message to all clients except the sender
+                var clientsToRemove = new List<Client>();
+
                 foreach (var client in _users.ToList())
                 {
                     if (client != sender && client.ClientSocket.Connected)
@@ -67,10 +67,45 @@ namespace ChattyServer
                         catch (Exception ex)
                         {
                             Console.WriteLine($"{DateTime.Now}: Error broadcasting to {client.Username}: {ex.Message}");
-                            // Remove disconnected client
-                            _users.Remove(client);
+                            clientsToRemove.Add(client);
                         }
                     }
+                }
+
+                // Remove disconnected clients
+                foreach (var client in clientsToRemove)
+                {
+                    _users.Remove(client);
+                }
+            }
+        }
+
+        public static void BroadcastSystemMessage(string message, Client excludeClient = null)
+        {
+            lock (_lockObject)
+            {
+                var clientsToRemove = new List<Client>();
+
+                foreach (var client in _users.ToList())
+                {
+                    if (client != excludeClient && client.ClientSocket.Connected)
+                    {
+                        try
+                        {
+                            client.SendSystemMessage($"(SYSTEM) {message}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"{DateTime.Now}: Error broadcasting system message to {client.Username}: {ex.Message}");
+                            clientsToRemove.Add(client);
+                        }
+                    }
+                }
+
+                // Remove disconnected clients
+                foreach (var client in clientsToRemove)
+                {
+                    _users.Remove(client);
                 }
             }
         }

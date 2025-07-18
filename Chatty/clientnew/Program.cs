@@ -21,13 +21,6 @@ Console.WriteLine("can you enter a message please");
 while (1 > 0)
 {
     var input = Console.ReadLine();
-    List<byte> packet = new List<byte>();
-    packet.Add((byte)opcode.message);
-    var message = Encoding.ASCII.GetBytes(input);
-    byte length = (byte)message.Length;
-    packet.Add((byte)length);   
-    packet.AddRange(Encoding.ASCII.GetBytes(input));
-    client.GetStream().Write(packet.ToArray(), 0, packet.Count);
     var opcode1 = client.GetStream().ReadByte();
     if ((byte)opcode.message == opcode1)
         {
@@ -35,7 +28,6 @@ while (1 > 0)
         byte[] data = new byte[lengthofrecieved];
          _ = client.GetStream().Read(data, 0, lengthofrecieved);
          var complete_message = Encoding.ASCII.GetString(data);
-        Console.WriteLine(complete_message);
         }
    
 }

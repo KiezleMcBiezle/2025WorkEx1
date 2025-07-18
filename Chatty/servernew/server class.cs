@@ -89,11 +89,11 @@ namespace servernew
                         packet.AddRange(Encoding.ASCII.GetBytes(result.Message));
                         foreach (TcpClient client in clientlist)
                         {
-                            if (client == result.Clientsender)
-                        {
-                            continue;
-                        }
-                        packet.AddRange(Encoding.ASCII.GetBytes(usernamelist[result.Clientsender]));
+                        //    if (client == result.Clientsender)
+                        //{
+                        //    continue;
+                        //}
+                        packet.AddRange(Encoding.ASCII.GetBytes("Unknown"));
                         client.GetStream().Write(packet.ToArray(), 0, packet.Count);
                         }
                     }

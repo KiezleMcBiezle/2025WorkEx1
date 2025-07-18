@@ -170,7 +170,7 @@ namespace ChattyServer
 
                 var messageBytes = Encoding.ASCII.GetBytes(message);
                 var packet = new List<byte>
-{
+                {
                     (byte)Opcode.SystemMessage,  // Use SystemMessage opcode
                     (byte)messageBytes.Length,
                     0 // System message (User ID 0)
@@ -181,9 +181,10 @@ namespace ChattyServer
                 Stream.Flush();
             }
             catch (Exception ex)
-    {
+            {
                 Console.WriteLine($"{DateTime.Now}: Error sending system message to {Username}: {ex.Message}");
             }
         }
     }
 }
+

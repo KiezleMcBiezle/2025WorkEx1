@@ -15,7 +15,6 @@ namespace servernew
     {
         private TcpListener listener;
         private List<TcpClient> clientlist;
-        Dictionary<TcpClient, string> usernamelist;
         ConcurrentQueue<message_packet> queue;
 
 
@@ -24,7 +23,6 @@ namespace servernew
         {
             clientlist = new List<TcpClient>();
             listener = new TcpListener(IPAddress.Parse("192.168.55.3"), 9001);
-            usernamelist = new Dictionary<TcpClient, string>();
             queue = new ConcurrentQueue<message_packet>();
         }
 
@@ -41,16 +39,6 @@ namespace servernew
             {
                 var client = listener.AcceptTcpClient();
                 clientlist.Add(client);
-                var opcode2 = client.GetStream().ReadByte();
-                if ((byte)opcode.username == opcode2)
-                {
-                    var len = client.GetStream().ReadByte();
-                    byte[] datas = new byte[len];
-                    var userid = client.GetStream().ReadByte();
-                    _ = client.GetStream().Read(datas, 0, len);
-                    var complete_username = Encoding.ASCII.GetString(datas);
-                    usernamelist[client] = complete_username;
-                }
                 _ = Task.Run(() => Handle_client(client));
             }
 

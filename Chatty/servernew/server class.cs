@@ -89,7 +89,7 @@ namespace servernew
                         packet.AddRange(Encoding.ASCII.GetBytes(result.Message));
                         foreach (TcpClient client in clientlist)
                         {
-                        if (client == result.clientsender)
+                        if (client == result.Clientsender)
                         {
                             continue;
                         }

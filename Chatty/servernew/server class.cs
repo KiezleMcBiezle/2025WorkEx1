@@ -89,10 +89,10 @@ namespace servernew
                         packet.AddRange(Encoding.ASCII.GetBytes(result.Message));
                         foreach (TcpClient client in clientlist)
                         {
-                        //    if (client == result.Clientsender)
-                        //{
-                        //    continue;
-                        //}
+                        if (client == result.clientsender)
+                        {
+                            continue;
+                        }
                         packet.AddRange(Encoding.ASCII.GetBytes("Unknown"));
                         client.GetStream().Write(packet.ToArray(), 0, packet.Count);
                         }

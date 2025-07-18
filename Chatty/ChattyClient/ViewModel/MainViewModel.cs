@@ -66,6 +66,7 @@ namespace ChattyClient.ViewModel
                 var client = new TcpClient();
                 client.Connect(IPAddress.Parse("192.168.55.3"), 9001);
                 Class1 client2 = new Class1(client);
+                client2.start();
                 client1 = client2;
                 client2.messagerecieved += OnMessageReceived;
 

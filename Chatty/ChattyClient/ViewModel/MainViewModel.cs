@@ -106,7 +106,7 @@ namespace ChattyClient.ViewModel
 
             try
             {
-                client1.send_message(CurrentMessage);
+                client1.send_message($"{Username} : {CurrentMessage}");
 
                 // Add your own message with timestamp
                 string timestamp = DateTime.Now.ToString("HH:mm:ss");
